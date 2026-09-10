@@ -46,13 +46,13 @@ parser.add_argument(
 parser.add_argument(
     "--input_file",
     type=str,
-    default="robolab/data/motions/f1_gmr/",
+    default="robolab/data/motions/f1_gmr/36_01.pkl",
     help="Path to the input GMR motion file (pickle format).",
 )
 parser.add_argument(
     "--output_file",
     type=str,
-    default="robolab/data/motions/f1_lab/",
+    default="robolab/data/motions/f1_lab/36_01.pkl",
     help="Path to save the converted motion data (pickle format).",
 )
 parser.add_argument(

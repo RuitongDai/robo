@@ -77,6 +77,11 @@ class LoopMode(enum.Enum):
     CLAMP = 0
     WRAP = 1
 
+class NumpyCompatUnpickler(pickle.Unpickler):
+    def find_class(self, module, name):
+        if module.startswith("numpy._core"):
+            module = "numpy.core" + module[len("numpy._core"):]
+        return super().find_class(module, name)
 
 def extract_gmr_data(
     gmr_file_path: str, 
@@ -86,8 +91,8 @@ def extract_gmr_data(
     start_frame: int = 0,
     end_frame: int = -1,
 ):
-    with open(gmr_file_path, 'rb') as f:
-        gmr_data = pickle.load(f)
+    with open(gmr_file_path, "rb") as f:
+        gmr_data = NumpyCompatUnpickler(f).load()
         
     # Extract data from GMR format
     fps = gmr_data['fps']

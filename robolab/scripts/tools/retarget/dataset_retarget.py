@@ -62,7 +62,8 @@ parser = argparse.ArgumentParser(description="Batch retarget GMR -> Isaac Lab (m
 parser.add_argument(
     "--robot",
     type=str,
-    default="rpo", 
+    choices=["rpo", "f1"],
+    default="f1",
     help="Robot name to use (default: rpo)",
 )
 parser.add_argument(
@@ -109,6 +110,8 @@ from isaaclab.scene import InteractiveScene
 # load robot cfg as single_retarget does
 if args_cli.robot == "rpo":
     from robolab.assets.robots.roboparty import RPO_CFG as ROBOT_CFG
+elif args_cli.robot == "f1":
+    from robolab.assets.robots.f1 import F1_CFG as ROBOT_CFG
 else:
     raise ValueError(f"Robot {args_cli.robot} not supported.")
 

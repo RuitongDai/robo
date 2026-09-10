@@ -79,14 +79,11 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
             "36_11": 1,
             "114_08": 1,
             "114_09": 1,
-            "A1-_Stand_stageii": 1,
-            "B9_-__Walk_turn_left_90_stageii": 1,
-            "B10_-__Walk_turn_left_45_stageii": 1,
-            "B13_-__Walk_turn_right_90_stageii": 1,
-            "B14_-__Walk_turn_right_45_t2_stageii": 1,
-            "B15_-__Walk_turn_around_stageii": 1,
-            "turn_l": 1,
-            "turn_r": 1,
+            "back": 1,
+            "s": 1,
+            "stand": 1,
+            "turn_around": 1,
+            "walk": 1,
         }
         self.animation.animation.num_steps_to_use = AMP_NUM_STEPS
         self.observations.disc.history_length = AMP_NUM_STEPS
