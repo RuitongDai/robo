@@ -146,12 +146,12 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
 
         self.commands.base_velocity.resampling_time_range = (8.0, 12.0)
         self.commands.base_velocity.rel_standing_envs = 0.0
-        
+
         # spawn the robot randomly in the grid (instead of their terrain levels)
         # reduce the number of terrains to save memory
         if self.scene.terrain.terrain_generator is not None:
-            self.scene.terrain.terrain_generator.num_rows = 1
-            self.scene.terrain.terrain_generator.num_cols = 1
+            self.scene.terrain.terrain_generator.num_rows = 4
+            self.scene.terrain.terrain_generator.num_cols = 10
 
         self.scene.leg_volume_points.debug_vis = True
         self.scene.knee_volume_points.debug_vis = True
