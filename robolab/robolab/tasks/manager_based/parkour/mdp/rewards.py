@@ -104,6 +104,35 @@ def rpo_thigh_yaw_joint_sign_penalty(
     right_thigh_yaw_penalty = torch.where(asset.data.joint_pos[:, right_thigh_yaw_joint_index] < 0.0, -asset.data.joint_pos[:, right_thigh_yaw_joint_index], 0.0)
     return left_thigh_yaw_penalty + right_thigh_yaw_penalty
 
+
+def f1_hip_yaw_joint_sign_penalty(
+    env: ManagerBasedRLEnv,
+    asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"),
+) -> torch.Tensor:
+    """Penalize outward hip-yaw rotation for F1."""
+
+    asset = env.scene[asset_cfg.name]
+
+    left_id = asset.joint_names.index("left_hip_yaw_joint")
+    right_id = asset.joint_names.index("right_hip_yaw_joint")
+
+    # Use angles relative to the default joint positions.
+    left_yaw = (
+        asset.data.joint_pos[:, left_id]
+        - asset.data.default_joint_pos[:, left_id]
+    )
+    right_yaw = (
+        asset.data.joint_pos[:, right_id]
+        - asset.data.default_joint_pos[:, right_id]
+    )
+
+    # Left positive and right negative correspond to outward yaw.
+    left_outward = torch.clamp(left_yaw, min=0.0)
+    right_outward = torch.clamp(-right_yaw, min=0.0)
+
+    return left_outward + right_outward
+
+
 def body_distance_y(
     env: ManagerBasedRLEnv, asset_cfg: SceneEntityCfg = SceneEntityCfg("robot"), min: float = 0.2, max: float = 0.5
 ) -> torch.Tensor:

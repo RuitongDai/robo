@@ -1,7 +1,12 @@
 import copy
 import os
 
-from isaaclab.managers import SceneEntityCfg
+from isaaclab.managers import (
+    SceneEntityCfg,
+    RewardTermCfg as RewTerm,
+)
+
+import robolab.tasks.manager_based.parkour.mdp as mdp
 from isaaclab.utils import configclass
 
 from robolab import ROBOLAB_ROOT_DIR
@@ -21,15 +26,15 @@ F1_KEY_BODY_NAMES = [
 ]
 
 F1_LEG_VOLUME_POINTS_GRID = Grid3dPointsGeneratorCfg(
-    x_min=-0.05,
-    x_max=0.13,
-    x_num=19,
-    y_min=-0.03,
-    y_max=0.03,
-    y_num=7,
-    z_min=-0.04,
-    z_max=-0.02,
-    z_num=3,
+    x_min=-0.08,
+    x_max=0.17,
+    x_num=26,
+    y_min=-0.04,
+    y_max=0.04,
+    y_num=9,
+    z_min=-0.05,
+    z_max=-0.01,
+    z_num=5,
 )
 F1_KNEE_VOLUME_POINTS_GRID = Grid3dPointsGeneratorCfg(
     x_min=-0.04,
@@ -96,7 +101,10 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
             preserve_order=True,
         )
         # Rewards
-        self.rewards.rewards.rpo_thigh_yaw_joint_sign_penalty = None
+        self.rewards.rewards.rpo_thigh_yaw_joint_sign_penalty = RewTerm(
+            func=mdp.f1_hip_yaw_joint_sign_penalty,
+            weight=-5,
+        )
         self.rewards.rewards.joint_deviation_upper_body.params[
             "asset_cfg"
         ] = SceneEntityCfg(
@@ -139,7 +147,7 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
         super().__post_init__()
         self.scene.terrain.terrain_generator = ROUGH_TERRAINS_CFG_PLAY
         # make a smaller scene for play
-        self.scene.num_envs = 10
+        self.scene.num_envs = 1
         self.scene.env_spacing = 2.5
         self.episode_length_s = 10
         self.terminations.root_height = None
@@ -150,11 +158,12 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
         # spawn the robot randomly in the grid (instead of their terrain levels)
         # reduce the number of terrains to save memory
         if self.scene.terrain.terrain_generator is not None:
-            self.scene.terrain.terrain_generator.num_rows = 4
-            self.scene.terrain.terrain_generator.num_cols = 10
+            self.scene.terrain.terrain_generator.num_rows = 1
+            self.scene.terrain.terrain_generator.num_cols = 1
 
         self.scene.leg_volume_points.debug_vis = True
         self.scene.knee_volume_points.debug_vis = True
+        # self.scene.camera.debug_vis = True
         self.commands.base_velocity.debug_vis = True
         self.events.physics_material = None
         self.events.reset_robot_joints.params = {
