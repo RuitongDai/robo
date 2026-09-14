@@ -147,7 +147,7 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
         super().__post_init__()
         self.scene.terrain.terrain_generator = ROUGH_TERRAINS_CFG_PLAY
         # make a smaller scene for play
-        self.scene.num_envs = 1
+        self.scene.num_envs = 10
         self.scene.env_spacing = 2.5
         self.episode_length_s = 10
         self.terminations.root_height = None
@@ -158,8 +158,8 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
         # spawn the robot randomly in the grid (instead of their terrain levels)
         # reduce the number of terrains to save memory
         if self.scene.terrain.terrain_generator is not None:
-            self.scene.terrain.terrain_generator.num_rows = 1
-            self.scene.terrain.terrain_generator.num_cols = 1
+            self.scene.terrain.terrain_generator.num_rows = 4
+            self.scene.terrain.terrain_generator.num_cols = 10
 
         self.scene.leg_volume_points.debug_vis = True
         self.scene.knee_volume_points.debug_vis = True

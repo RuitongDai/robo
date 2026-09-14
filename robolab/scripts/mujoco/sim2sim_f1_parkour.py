@@ -1,5 +1,5 @@
 """
-python robolab/scripts/mujoco/sim2sim_f1_parkour.py --depth_encoder logs/rsl_rl/f1_parkour/2026-09-11_10-00-42/exported/0-depth_encoder.onnx --actor logs/rsl_rl/f1_parkour/2026-09-11_10-00-42/exported/actor.onnx --mujoco_xml robolab/data/robots/f1/f1_stairs.xml
+python robolab/scripts/mujoco/sim2sim_f1_parkour.py --depth_encoder --actor --mujoco_xml robolab/data/robots/f1/f1_stairs.xml
 """
 
 
