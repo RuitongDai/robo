@@ -39,13 +39,13 @@ F1_LEG_VOLUME_POINTS_GRID = Grid3dPointsGeneratorCfg(
 F1_KNEE_VOLUME_POINTS_GRID = Grid3dPointsGeneratorCfg(
     x_min=-0.04,
     x_max=0.04,
-    x_num=9,
+    x_num=5,
     y_min=-0.04,
     y_max=0.04,
-    y_num=9,
+    y_num=5,
     z_min=-0.36,
     z_max=-0.02,
-    z_num=35,
+    z_num=18,
 )
 
 ROUGH_TERRAINS_CFG_PLAY = copy.deepcopy(ROUGH_TERRAINS_CFG)
@@ -103,7 +103,7 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
         # Rewards
         self.rewards.rewards.rpo_thigh_yaw_joint_sign_penalty = RewTerm(
             func=mdp.f1_hip_yaw_joint_sign_penalty,
-            weight=-5,
+            weight=-0.5,
         )
         self.rewards.rewards.joint_deviation_upper_body.params[
             "asset_cfg"
@@ -161,8 +161,8 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
             self.scene.terrain.terrain_generator.num_rows = 4
             self.scene.terrain.terrain_generator.num_cols = 10
 
-        self.scene.leg_volume_points.debug_vis = True
-        self.scene.knee_volume_points.debug_vis = True
+        self.scene.leg_volume_points.debug_vis = False
+        self.scene.knee_volume_points.debug_vis = False
         # self.scene.camera.debug_vis = True
         self.commands.base_velocity.debug_vis = True
         self.events.physics_material = None

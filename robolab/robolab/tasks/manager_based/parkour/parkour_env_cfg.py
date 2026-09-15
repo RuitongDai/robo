@@ -107,19 +107,19 @@ class SceneCfg(InteractiveSceneCfg):
     # sensors
     left_height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/left_ankle_roll_link",
-        offset=RayCasterCfg.OffsetCfg(pos=(0.04, 0.0, 20.0)),
+        offset=RayCasterCfg.OffsetCfg(pos=(0.045, 0.0, 20.0)),
         ray_alignment="yaw",
-        pattern_cfg=patterns.GridPatternCfg(resolution=0.12, size=[0.12, 0.0]),
-        debug_vis=False,
+        pattern_cfg=patterns.GridPatternCfg(resolution=0.04, size=[0.20, 0.04]),
+        debug_vis=True,
         mesh_prim_paths=["/World/ground"],
         update_period=0.02,
     )
     right_height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/right_ankle_roll_link",
-        offset=RayCasterCfg.OffsetCfg(pos=(0.04, 0.0, 20.0)),
+        offset=RayCasterCfg.OffsetCfg(pos=(0.045, 0.0, 20.0)),
         ray_alignment="yaw",
-        pattern_cfg=patterns.GridPatternCfg(resolution=0.12, size=[0.12, 0.0]),
-        debug_vis=False,
+        pattern_cfg=patterns.GridPatternCfg(resolution=0.04, size=[0.20, 0.04]),
+        debug_vis=True,
         mesh_prim_paths=["/World/ground"],
         update_period=0.02,
     )
