@@ -72,9 +72,10 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
         self.scene.leg_volume_points.points_generator = (
             F1_LEG_VOLUME_POINTS_GRID
         )
-        self.scene.knee_volume_points.points_generator = (
-            F1_KNEE_VOLUME_POINTS_GRID
-        )
+        # self.scene.knee_volume_points.points_generator = (
+        #     F1_KNEE_VOLUME_POINTS_GRID
+        # )
+        self.scene.knee_volume_points = None
         # Motion
         self.motion_data.motion_dataset.motion_data_dir = os.path.join(
             ROBOLAB_ROOT_DIR, "data", "motions", "f1_lab"
@@ -105,6 +106,7 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
             func=mdp.f1_hip_yaw_joint_sign_penalty,
             weight=-0.5,
         )
+        self.rewards.rewards.feet_flat_ori.weight = -0.8
         self.rewards.rewards.joint_deviation_upper_body.params[
             "asset_cfg"
         ] = SceneEntityCfg(
@@ -125,6 +127,7 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
         self.rewards.rewards.feet_at_plane.params[
             "height_offset"
         ] = 0.036
+        self.rewards.rewards.volume_points_penetration_knee = None
         # Events
         self.events.randomize_rigid_body_com.params[
             "asset_cfg"
@@ -132,6 +135,7 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
             "robot",
             body_names=["torso_link", "pelvis"],
         )
+        self.events.register_virtual_obstacles_knee = None
         # Terminations
         self.terminations.base_contact.params[
             "sensor_cfg"
@@ -139,6 +143,8 @@ class F1ParkourEnvCfg(ParkourEnvCfg):
             "contact_forces",
             body_names=["pelvis", "torso_link"],
         )
+        # Curriculum
+        self.curriculum.volume_points_penetration_weight_knee = None
 
 
 @configclass
@@ -162,7 +168,6 @@ class F1ParkourEnvCfg_PLAY(F1ParkourEnvCfg):
             self.scene.terrain.terrain_generator.num_cols = 10
 
         self.scene.leg_volume_points.debug_vis = False
-        self.scene.knee_volume_points.debug_vis = False
         # self.scene.camera.debug_vis = True
         self.commands.base_velocity.debug_vis = True
         self.events.physics_material = None
